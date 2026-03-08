@@ -1,0 +1,6 @@
+#Other files
+*.tldr
+*.txt
+
+#Electron files that we don't need
+node_modules
