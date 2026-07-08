@@ -1,1 +1,1 @@
-A Music Player app built with Electron
+A Music Player app built using Electron

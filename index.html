@@ -12,23 +12,26 @@
       <!--Display of the song cover-->
       <div class="Cover_display">
         <div id="cover">
-          <img src="photo.png" alt="">
+          <img id="coverImg" src="cover.jpg" alt="Song image cover here">
         </div>
       </div>
 
       <!--Display of the songs, controls, etc-->
       <div class="Console">
         <!--Other Options Panel-->
-        <div class="options"></div>
+        <div class="options">
+          <span id="importStatus"></span>
+        </div>
 
         <!--Song Selector/Displayer-->
         <div class="songs">
           <div id="title">No track loaded</div>
+          <div id="trackList"></div>
         </div>
 
         <!--Control Panel-->
         <div class="controls">
-          <button id="openBtn">Open</button>
+          <button id="openBtn">Open Folder</button>
           <button id="playBtn">Play</button>
           <button id="pauseBtn">Pause</button>
           <input id="seek" type="range" min="0" max="100" value="0" />

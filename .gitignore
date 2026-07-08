@@ -1,6 +1,16 @@
 #Other files
 *.tldr
 *.txt
+*.c
 
 #Electron files that we don't need
 node_modules
+
+#Editor's files
+.vscode
+settings.json
+*.json
+
+#Photo files
+*.png
+*.jpeg
