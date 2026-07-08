@@ -27,7 +27,7 @@ html, body {
     border: 2px solid orange;
     flex: 1;
     min-width: 450px;
-    max-width: 450px;
+    max-width: 800px;
     aspect-ratio: 1;
     box-sizing: border-box;
     overflow: hidden;
@@ -172,4 +172,57 @@ html, body {
 .controls input[type="range"] {
     flex: 1;
     min-width: 80px;
+}
+
+.play-pause-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 2px solid #333;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    color: #333;
+    position: relative;
+}
+
+.play-pause-btn:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.play-pause-btn:active {
+    transform: scale(0.95);
+}
+
+.play-pause-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.play-pause-btn .play-icon,
+.play-pause-btn .pause-icon {
+    position: absolute;
+    transition: opacity 0.15s ease;
+    opacity: 1;
+}
+
+.play-pause-btn .play-icon.hidden,
+.play-pause-btn .pause-icon.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.play-pause-btn .pause-icon {
+    display: none;
+}
+
+.play-pause-btn .pause-icon:not(.hidden) {
+    display: block;
 }

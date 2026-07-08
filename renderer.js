@@ -1,8 +1,9 @@
 //Variables
 const audio = document.getElementById("audio");
 const openBtn = document.getElementById("openBtn");
-const playBtn = document.getElementById("playBtn");
-const pauseBtn = document.getElementById("pauseBtn");
+const playPauseBtn = document.getElementById("playPauseBtn");
+const playIcon = playPauseBtn.querySelector(".play-icon");
+const pauseIcon = playPauseBtn.querySelector(".pause-icon");
 const seek = document.getElementById("seek");
 const vol = document.getElementById("vol");
 const title = document.getElementById("title");
@@ -11,7 +12,7 @@ const trackListEl = document.getElementById("trackList");
 const importStatusEl = document.getElementById("importStatus");
 const coverImg = document.getElementById("coverImg");
 
-const DEFAULT_COVER = "cover.jpg";
+const DEFAULT_COVER = "display_cover.jpeg";
 
 // In-memory copy of the library so clicks can reference tracks by id
 // without re-querying the main process every time.
@@ -133,14 +134,36 @@ window.api.onImportProgress(({ current, total }) => {
   if (library.length) {
     importStatusEl.textContent = `${library.length} track(s) in library`;
   }
+
+  // Initialize the play/pause icon
+  updatePlayPauseIcon();
 })();
 
 // ---------------------------------------------------------------------------
 // Transport controls
 // ---------------------------------------------------------------------------
 
-playBtn.addEventListener("click", () => audio.play());
-pauseBtn.addEventListener("click", () => audio.pause());
+function updatePlayPauseIcon() {
+  //Both icons are displayed but only one is visible
+  if (audio.paused) {
+    playIcon.classList.remove("hidden");
+    pauseIcon.classList.add("hidden");
+  } else {
+    playIcon.classList.add("hidden");
+    pauseIcon.classList.remove("hidden");
+  }
+}
+
+playPauseBtn.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+});
+
+audio.addEventListener("play", updatePlayPauseIcon);
+audio.addEventListener("pause", updatePlayPauseIcon);
 
 vol.addEventListener("input", () => {
   audio.volume = parseFloat(vol.value);
