@@ -3,7 +3,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: rgb(205, 199, 199);
+    background-color: black;
 }
 
 .Music_player {
@@ -24,7 +24,7 @@ html, body {
 }
 
 .Cover_display {
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
     flex: 1;
     min-width: 450px;
     max-width: 800px;
@@ -50,11 +50,11 @@ html, body {
 .Console {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     gap: 12px;
     flex: 1;
     min-width: 250px;
-    /* background-color: linear-gradient(); */
+    background-color: black;
 }
 
 .options{
@@ -70,7 +70,7 @@ html, body {
 .songs {
     display: flex;
     flex-direction: column;
-    border: 2px solid green;
+    /* border: 2px solid green; */
     flex: 1;
     min-height: 200px;
     background-color: bisque;
@@ -151,6 +151,11 @@ html, body {
     font-size: 0.85em;
     color: #666;
     flex-shrink: 0;
+}
+
+.search_bar{
+    border: 1px solid green;
+    border-radius: 10px;
 }
 
 .controls {

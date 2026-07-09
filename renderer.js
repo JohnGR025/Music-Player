@@ -46,11 +46,10 @@ function updateMusicPlayerBackgroundFromCover() {
   const topData = ctx.getImageData(0, 0, width, rows).data;
   const bottomData = ctx.getImageData(0, height - rows, width, rows).data;
 
-  let r = 0;
-  let g = 0;
-  let b = 0;
-  let count = 0;
+  let r=0, g=0, b=0;
+  let count=0;
 
+  //Calculate rgb values
   for (const data of [topData, bottomData]) {
     for (let i = 0; i < data.length; i += 4) {
       r += data[i];
@@ -62,6 +61,7 @@ function updateMusicPlayerBackgroundFromCover() {
 
   if (count === 0) return;
 
+  //Finallize rgb values
   r = Math.round(r / count);
   g = Math.round(g / count);
   b = Math.round(b / count);
@@ -132,7 +132,7 @@ function playTrack(trackId) {
   currentTrackId = trackId;
 
   audio.src = track.fileUrl;
-  title.textContent = `${track.title} — ${track.artist}`;
+  title.textContent = `${track.title}`;
   coverImg.src = track.picture || DEFAULT_COVER;
 
   // Re-render so the "selected" highlight moves to the clicked row
