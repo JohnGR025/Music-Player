@@ -11,6 +11,7 @@ const timeEl = document.getElementById("time");
 const trackListEl = document.getElementById("trackList");
 const importStatusEl = document.getElementById("importStatus");
 const coverImg = document.getElementById("coverImg");
+const musicPlayer = document.querySelector(".Music_player");
 
 const DEFAULT_COVER = "display_cover.jpeg";
 
@@ -26,6 +27,45 @@ function fmtTime(sec) {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return `${m}:${pad2(s)}`;
+}
+
+//Change background color depending from the Cover image
+function updateMusicPlayerBackgroundFromCover() {
+  if (!coverImg.naturalWidth || !coverImg.naturalHeight) return;
+
+  const canvas = document.createElement("canvas");
+  const width = coverImg.naturalWidth;
+  const height = coverImg.naturalHeight;
+  const rows = Math.min(3, height);
+
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(coverImg, 0, 0, width, height);
+
+  const topData = ctx.getImageData(0, 0, width, rows).data;
+  const bottomData = ctx.getImageData(0, height - rows, width, rows).data;
+
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  let count = 0;
+
+  for (const data of [topData, bottomData]) {
+    for (let i = 0; i < data.length; i += 4) {
+      r += data[i];
+      g += data[i + 1];
+      b += data[i + 2];
+      count += 1;
+    }
+  }
+
+  if (count === 0) return;
+
+  r = Math.round(r / count);
+  g = Math.round(g / count);
+  b = Math.round(b / count);
+  musicPlayer.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
 }
 
 // ---------------------------------------------------------------------------
@@ -94,13 +134,14 @@ function playTrack(trackId) {
   audio.src = track.fileUrl;
   title.textContent = `${track.title} — ${track.artist}`;
   coverImg.src = track.picture || DEFAULT_COVER;
-  coverImg.style.backgroundSize = "cover";
 
   // Re-render so the "selected" highlight moves to the clicked row
   renderTrackList(library);
 
   audio.play().catch((err) => console.warn("Playback failed:", err.message));
 }
+
+coverImg.addEventListener("load", updateMusicPlayerBackgroundFromCover);
 
 // ---------------------------------------------------------------------------
 // Folder import
