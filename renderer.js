@@ -12,6 +12,7 @@ const trackListEl = document.getElementById("trackList");
 const importStatusEl = document.getElementById("importStatus");
 const coverImg = document.getElementById("coverImg");
 const musicPlayer = document.querySelector(".Music_player");
+const searchInput = document.getElementById("searchInput");
 
 const DEFAULT_COVER = "display_cover.jpeg";
 
@@ -71,14 +72,15 @@ function updateMusicPlayerBackgroundFromCover() {
 // ---------------------------------------------------------------------------
 // Track list rendering
 // ---------------------------------------------------------------------------
-
 function renderTrackList(tracks) {
   trackListEl.innerHTML = "";
 
   if (!tracks.length) {
     const empty = document.createElement("div");
     empty.className = "trackEmpty";
-    empty.textContent = "No tracks imported yet. Click \"Open Folder\" to import a music folder.";
+    empty.textContent = library.length === 0
+      ? "No tracks imported yet. Click \"Open Folder\" to import a music folder."
+      : "No songs match your search.";
     trackListEl.appendChild(empty);
     return;
   }
@@ -122,9 +124,34 @@ function escapeHtml(str) {
 }
 
 // ---------------------------------------------------------------------------
-// Playback
+// Search
 // ---------------------------------------------------------------------------
 
+// Returns tracks whose title, artist, or album partially or fully match
+// whatever's currently typed in the search box (case-insensitive).
+function getFilteredTracks() {
+  const query = searchInput.value.trim().toLowerCase();
+  if (!query) return library;
+
+  return library.filter((track) => {
+    return (
+      (track.title && track.title.toLowerCase().includes(query)) ||
+      (track.artist && track.artist.toLowerCase().includes(query)) ||
+      (track.album && track.album.toLowerCase().includes(query))
+    );
+  });
+}
+
+// Re-renders the track list respecting whatever search query is active.
+function applyFilterAndRender() {
+  renderTrackList(getFilteredTracks());
+}
+
+searchInput.addEventListener("input", applyFilterAndRender);
+
+// ---------------------------------------------------------------------------
+// Playback
+// ---------------------------------------------------------------------------
 function playTrack(trackId) {
   const track = library.find((t) => t.id === trackId);
   if (!track) return;
@@ -135,8 +162,9 @@ function playTrack(trackId) {
   title.textContent = `${track.title}`;
   coverImg.src = track.picture || DEFAULT_COVER;
 
-  // Re-render so the "selected" highlight moves to the clicked row
-  renderTrackList(library);
+  // Re-render so the "selected" highlight moves to the clicked row,
+  // while keeping whatever search filter is currently active
+  applyFilterAndRender();
 
   audio.play().catch((err) => console.warn("Playback failed:", err.message));
 }
@@ -146,7 +174,6 @@ coverImg.addEventListener("load", updateMusicPlayerBackgroundFromCover);
 // ---------------------------------------------------------------------------
 // Folder import
 // ---------------------------------------------------------------------------
-
 openBtn.addEventListener("click", async () => {
   const folderPath = await window.api.openFolder();
   if (!folderPath) return; // user cancelled
@@ -156,7 +183,7 @@ openBtn.addEventListener("click", async () => {
   const tracks = await window.api.importFolder(folderPath);
 
   library = tracks;
-  renderTrackList(library);
+  applyFilterAndRender();
   importStatusEl.textContent = `${library.length} track(s) in library`;
 });
 
@@ -168,10 +195,9 @@ window.api.onImportProgress(({ current, total }) => {
 // ---------------------------------------------------------------------------
 // Load whatever's already in the library database on startup
 // ---------------------------------------------------------------------------
-
 (async function init() {
   library = await window.api.getLibrary();
-  renderTrackList(library);
+  applyFilterAndRender();
   if (library.length) {
     importStatusEl.textContent = `${library.length} track(s) in library`;
   }

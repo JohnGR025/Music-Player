@@ -49,7 +49,7 @@ html, body {
 
 .Console {
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr auto auto;
     /* border: 2px solid red; */
     gap: 12px;
     flex: 1;
@@ -153,9 +153,45 @@ html, body {
     flex-shrink: 0;
 }
 
-.search_bar{
-    border: 1px solid green;
+.search_bar {
+    border: 1px solid #666;
+    border-width: 3px;
     border-radius: 10px;
+    background-color: bisque;
+    height: 40px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+#search_input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.search-icon {
+    flex-shrink: 0;
+    color: #4f4f4f;
+}
+
+#search_input input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.95em;
+    color: #222;
+}
+
+#search_input input::placeholder {
+    color: #888;
 }
 
 .controls {
