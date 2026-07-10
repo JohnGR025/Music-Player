@@ -4,6 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: black;
+    font-family: 'Poppins', sans-serif;
 }
 
 .Music_player {
@@ -210,15 +211,18 @@ html, body {
 }
 .controls > * {
     flex-shrink: 0;
+    cursor: default;
 }
 .controls input[type="range"] {
     flex: 1;
     min-width: 80px;
+    cursor: pointer;
 }
 
+.open-folder-btn,
 .play-pause-btn {
-    width: 44px;
-    height: 44px;
+    width: 35px;
+    height: 35px;
     padding: 0;
     border: 2px solid #333;
     border-radius: 50%;
@@ -233,16 +237,19 @@ html, body {
     position: relative;
 }
 
+.open-folder-btn:hover,
 .play-pause-btn:hover {
     background-color: #f0f0f0;
     transform: scale(1.05);
     cursor: pointer;
 }
 
+.open-folder-btn:active,
 .play-pause-btn:active {
     transform: scale(0.95);
 }
 
+.open-folder-btn svg,
 .play-pause-btn svg {
     width: 24px;
     height: 24px;
