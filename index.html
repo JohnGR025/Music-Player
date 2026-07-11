@@ -20,6 +20,12 @@
       <div class="Console">
         <!--Other Options Panel-->
         <div class="options">
+          <button id="openBtn" class="icon-btn open-folder-btn" title="Open Folder" type="button" aria-label="Open Folder">
+            <svg class="folder-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
+              <path d="M3 10h18"/>
+            </svg>
+          </button>
           <span id="importStatus"></span>
         </div>
 
@@ -42,10 +48,10 @@
 
         <!--Control Panel-->
         <div class="controls">
-          <button id="openBtn" class="open-folder-btn" title="Open Folder" type="button" aria-label="Open Folder">
-            <svg class="folder-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
-              <path d="M3 10h18"/>
+          <button id="prevBtn" class="icon-btn" title="Previous Song" type="button" aria-label="Previous Song">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 7l-5 5 5 5"/>
+              <path d="M18 7l-5 5 5 5"/>
             </svg>
           </button>
           <button id="playPauseBtn" class="play-pause-btn" title="Play/Pause">
@@ -54,6 +60,12 @@
             </svg>
             <svg class="pause-icon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
               <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+          </button>
+          <button id="nextBtn" class="icon-btn" title="Next Song" type="button" aria-label="Next Song">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M13 7l5 5-5 5"/>
+              <path d="M6 7l5 5-5 5"/>
             </svg>
           </button>
           <input id="seek" type="range" min="0" max="100" value="0" />

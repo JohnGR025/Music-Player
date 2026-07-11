@@ -1,7 +1,9 @@
 //Variables
 const audio = document.getElementById("audio");
 const openBtn = document.getElementById("openBtn");
+const prevBtn = document.getElementById("prevBtn");
 const playPauseBtn = document.getElementById("playPauseBtn");
+const nextBtn = document.getElementById("nextBtn");
 const playIcon = playPauseBtn.querySelector(".play-icon");
 const pauseIcon = playPauseBtn.querySelector(".pause-icon");
 const seek = document.getElementById("seek");
@@ -147,6 +149,29 @@ function applyFilterAndRender() {
   renderTrackList(getFilteredTracks());
 }
 
+function skipTrack(direction) {
+  const queue = getFilteredTracks();
+  const activeTracks = queue.length ? queue : library;
+
+  if (!activeTracks.length) return;
+
+  if (!currentTrackId) {
+    const target = direction > 0 ? activeTracks[0] : activeTracks[activeTracks.length - 1];
+    if (target) playTrack(target.id);
+    return;
+  }
+
+  const currentIndex = activeTracks.findIndex((track) => track.id === currentTrackId);
+  if (currentIndex === -1) {
+    const target = direction > 0 ? activeTracks[0] : activeTracks[activeTracks.length - 1];
+    if (target) playTrack(target.id);
+    return;
+  }
+
+  const targetIndex = (currentIndex + direction + activeTracks.length) % activeTracks.length;
+  playTrack(activeTracks[targetIndex].id);
+}
+
 searchInput.addEventListener("input", applyFilterAndRender);
 
 // ---------------------------------------------------------------------------
@@ -220,6 +245,9 @@ function updatePlayPauseIcon() {
     pauseIcon.classList.remove("hidden");
   }
 }
+
+prevBtn.addEventListener("click", () => skipTrack(-1));
+nextBtn.addEventListener("click", () => skipTrack(1));
 
 playPauseBtn.addEventListener("click", () => {
   if (audio.paused) {
