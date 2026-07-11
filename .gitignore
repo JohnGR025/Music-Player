@@ -3,7 +3,7 @@
 *.txt
 *.c
 
-#Electron files that we don't need
+#Electron files that we (may) don't need
 node_modules
 
 #Editor's files

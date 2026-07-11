@@ -74,12 +74,12 @@ html, body {
     box-sizing: border-box;
 }
 
-/* #importStatus {
+#importStatus {
     flex: 1;
     font-size: 0.9em;
     color: #333;
     cursor: default;
-} */
+}
 
 .songs {
     display: flex;

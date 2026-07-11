@@ -16,6 +16,10 @@ const coverImg = document.getElementById("coverImg");
 const musicPlayer = document.querySelector(".Music_player");
 const searchInput = document.getElementById("searchInput");
 
+const searchInputHoverText = "Search for a song from above...";
+let searchInputLibraryText = "";
+let searchInputPrevioustext = "";
+
 const DEFAULT_COVER = "display_cover.jpeg";
 
 // `library` = every track we know about (used for id lookups so playback
@@ -88,6 +92,7 @@ function renderTrackList(tracks) {
     backRow.addEventListener("click", () => {
       currentView = library;
       searchInput.value = "";
+      searchInput.placeholder = searchInputLibraryText;
       applyFilterAndRender();
     });
     trackListEl.appendChild(backRow);
@@ -188,7 +193,14 @@ function skipTrack(direction) {
   playTrack(activeTracks[targetIndex].id);
 }
 
+searchInput.addEventListener("mouseenter", () => {
+  searchInputPrevioustext = searchInput.placeholder;
+  searchInput.placeholder = searchInputHoverText;
+});
 searchInput.addEventListener("input", applyFilterAndRender);
+searchInput.addEventListener("mouseleave", () => {
+  searchInput.placeholder = searchInputPrevioustext;
+});
 
 // ---------------------------------------------------------------------------
 // Playback
@@ -228,6 +240,7 @@ openFolderBtn.addEventListener("click", async () => {
   searchInput.value = "";
   applyFilterAndRender();
   searchInput.placeholder = `${library.length} track(s) in library`;
+  searchInputLibraryText = `${library.length} track(s) in library`;
 });
 // Merges tracks into the in-memory library: updates the entry if the track
 // is already there (e.g. re-imported with fresh tags), otherwise appends it.
@@ -292,6 +305,7 @@ window.api.onImportProgress(({ current, total }) => {
   applyFilterAndRender();
   if (library.length) {
     searchInput.placeholder = `${library.length} track(s) in library`;
+    searchInputLibraryText = `${library.length} track(s) in library`;
   }
 
   // Initialize the play/pause icon
