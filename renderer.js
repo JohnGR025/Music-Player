@@ -12,7 +12,6 @@ const vol = document.getElementById("vol");
 const title = document.getElementById("title");
 const timeEl = document.getElementById("time");
 const trackListEl = document.getElementById("trackList");
-const importStatusEl = document.getElementById("importStatus");
 const coverImg = document.getElementById("coverImg");
 const musicPlayer = document.querySelector(".Music_player");
 const searchInput = document.getElementById("searchInput");
@@ -220,7 +219,7 @@ openFolderBtn.addEventListener("click", async () => {
   const folderPath = await window.api.openFolder();
   if (!folderPath) return; // user cancelled
 
-  importStatusEl.textContent = "Scanning folder...";
+  searchInput.placeholder = "Scanning folder...";
 
   const tracks = await window.api.importFolder(folderPath);
 
@@ -228,7 +227,7 @@ openFolderBtn.addEventListener("click", async () => {
   currentView = library;
   searchInput.value = "";
   applyFilterAndRender();
-  importStatusEl.textContent = `${library.length} track(s) in library`;
+  searchInput.placeholder = `${library.length} track(s) in library`;
 });
 // Merges tracks into the in-memory library: updates the entry if the track
 // is already there (e.g. re-imported with fresh tags), otherwise appends it.
@@ -247,12 +246,12 @@ async function openFileOrPlaylist() {
   const filePath = await window.api.openAudioOrPlaylist();
   if (!filePath) return; // user cancelled
 
-  importStatusEl.textContent = "Importing...";
+  searchInput.placeholder = "Importing...";
 
   const result = await window.api.importFileOrPlaylist(filePath);
 
   if (!result) {
-    importStatusEl.textContent = "Couldn't import that file — unsupported type or nothing found.";
+    searchInput.placeholder = "Couldn't import that file — unsupported type or nothing found.";
     return;
   }
 
@@ -261,7 +260,7 @@ async function openFileOrPlaylist() {
     currentView = [result.track];
     searchInput.value = "";
     applyFilterAndRender();
-    importStatusEl.textContent = "Now playing 1 track";
+    searchInput.placeholder = "Now playing 1 track";
     playTrack(result.track.id);
     return;
   }
@@ -271,7 +270,7 @@ async function openFileOrPlaylist() {
     currentView = result.tracks;
     searchInput.value = "";
     applyFilterAndRender();
-    importStatusEl.textContent = result.tracks.length
+    searchInput.placeholder = result.tracks.length
       ? `Showing playlist (${result.tracks.length} track(s))`
       : "Playlist contained no playable tracks.";
     if (result.tracks.length) playTrack(result.tracks[0].id);
@@ -281,7 +280,7 @@ openFileBtn.addEventListener("click", openFileOrPlaylist);
 
 // Live progress while the main process is parsing tags
 window.api.onImportProgress(({ current, total }) => {
-  importStatusEl.textContent = `Importing ${current} / ${total}...`;
+  searchInput.placeholder = `Importing ${current} / ${total}...`;
 });
 
 // ---------------------------------------------------------------------------
@@ -292,7 +291,7 @@ window.api.onImportProgress(({ current, total }) => {
   currentView = library;
   applyFilterAndRender();
   if (library.length) {
-    importStatusEl.textContent = `${library.length} track(s) in library`;
+    searchInput.placeholder = `${library.length} track(s) in library`;
   }
 
   // Initialize the play/pause icon
