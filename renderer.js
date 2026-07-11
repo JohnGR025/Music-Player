@@ -157,6 +157,7 @@ function getFilteredTracks() {
   if (!query) return currentView;
 
   return currentView.filter((track) => {
+    //Search using title/artist/album keywords
     return (
       (track.title && track.title.toLowerCase().includes(query)) ||
       (track.artist && track.artist.toLowerCase().includes(query)) ||
