@@ -4,6 +4,10 @@ contextBridge.exposeInMainWorld("api", {
   // Single-file open (kept from before)
   openAudioFile: () => ipcRenderer.invoke("dialog:openAudioFile"),
 
+  // "Open File" button — pick a single audio file or an .m3u/.m3u8 playlist
+  openAudioOrPlaylist: () => ipcRenderer.invoke("dialog:openAudioOrPlaylist"),
+  importFileOrPlaylist: (filePath) => ipcRenderer.invoke("library:importFileOrPlaylist", filePath),
+
   // Folder import flow
   openFolder: () => ipcRenderer.invoke("dialog:openFolder"),
   importFolder: (folderPath) => ipcRenderer.invoke("library:importFolder", folderPath),

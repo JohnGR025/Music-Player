@@ -1,6 +1,7 @@
-//Variables
+//Variable Storage
 const audio = document.getElementById("audio");
-const openBtn = document.getElementById("openBtn");
+const openFolderBtn = document.getElementById("openFolderBtn");
+const openFileBtn = document.getElementById("openFileBtn");
 const prevBtn = document.getElementById("prevBtn");
 const playPauseBtn = document.getElementById("playPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -18,9 +19,13 @@ const searchInput = document.getElementById("searchInput");
 
 const DEFAULT_COVER = "display_cover.jpeg";
 
-// In-memory copy of the library so clicks can reference tracks by id
-// without re-querying the main process every time.
+// `library` = every track we know about (used for id lookups so playback
+// always works). `currentView` = what's actually shown in #trackList right
+// now. Importing a folder sets both to the same thing; opening a single
+// file or playlist only changes currentView, so the .songs panel narrows
+// to just what you opened without losing the rest of your library.
 let library = [];
+let currentView = [];
 let currentTrackId = null;
 
 function pad2(n) { return String(n).padStart(2, "0"); }
@@ -77,11 +82,23 @@ function updateMusicPlayerBackgroundFromCover() {
 function renderTrackList(tracks) {
   trackListEl.innerHTML = "";
 
+  if (currentView !== library && library.length) {
+    const backRow = document.createElement("div");
+    backRow.className = "viewBackRow";
+    backRow.textContent = `\u25C0 Back to full library (${library.length} track${library.length === 1 ? "" : "s"})`;
+    backRow.addEventListener("click", () => {
+      currentView = library;
+      searchInput.value = "";
+      applyFilterAndRender();
+    });
+    trackListEl.appendChild(backRow);
+  }
+
   if (!tracks.length) {
     const empty = document.createElement("div");
     empty.className = "trackEmpty";
-    empty.textContent = library.length === 0
-      ? "No tracks imported yet. Click \"Open Folder\" to import a music folder."
+    empty.textContent = currentView.length === 0
+      ? "No tracks imported yet. Click \"Open Folder\" to import a music folder, or \"Open File\" to add a single track or playlist."
       : "No songs match your search.";
     trackListEl.appendChild(empty);
     return;
@@ -128,14 +145,14 @@ function escapeHtml(str) {
 // ---------------------------------------------------------------------------
 // Search
 // ---------------------------------------------------------------------------
-
-// Returns tracks whose title, artist, or album partially or fully match
-// whatever's currently typed in the search box (case-insensitive).
+// Returns tracks in the currently displayed view whose title, artist, or
+// album partially or fully match whatever's currently typed in the search
+// box (case-insensitive).
 function getFilteredTracks() {
   const query = searchInput.value.trim().toLowerCase();
-  if (!query) return library;
+  if (!query) return currentView;
 
-  return library.filter((track) => {
+  return currentView.filter((track) => {
     return (
       (track.title && track.title.toLowerCase().includes(query)) ||
       (track.artist && track.artist.toLowerCase().includes(query)) ||
@@ -151,7 +168,7 @@ function applyFilterAndRender() {
 
 function skipTrack(direction) {
   const queue = getFilteredTracks();
-  const activeTracks = queue.length ? queue : library;
+  const activeTracks = queue.length ? queue : currentView;
 
   if (!activeTracks.length) return;
 
@@ -197,9 +214,9 @@ function playTrack(trackId) {
 coverImg.addEventListener("load", updateMusicPlayerBackgroundFromCover);
 
 // ---------------------------------------------------------------------------
-// Folder import
+// Folder/File import
 // ---------------------------------------------------------------------------
-openBtn.addEventListener("click", async () => {
+openFolderBtn.addEventListener("click", async () => {
   const folderPath = await window.api.openFolder();
   if (!folderPath) return; // user cancelled
 
@@ -208,9 +225,59 @@ openBtn.addEventListener("click", async () => {
   const tracks = await window.api.importFolder(folderPath);
 
   library = tracks;
+  currentView = library;
+  searchInput.value = "";
   applyFilterAndRender();
   importStatusEl.textContent = `${library.length} track(s) in library`;
 });
+// Merges tracks into the in-memory library: updates the entry if the track
+// is already there (e.g. re-imported with fresh tags), otherwise appends it.
+function mergeTracksIntoLibrary(tracks) {
+  for (const track of tracks) {
+    const idx = library.findIndex((t) => t.id === track.id);
+    if (idx === -1) {
+      library.push(track);
+    } else {
+      library[idx] = track;
+    }
+  }
+}
+
+async function openFileOrPlaylist() {
+  const filePath = await window.api.openAudioOrPlaylist();
+  if (!filePath) return; // user cancelled
+
+  importStatusEl.textContent = "Importing...";
+
+  const result = await window.api.importFileOrPlaylist(filePath);
+
+  if (!result) {
+    importStatusEl.textContent = "Couldn't import that file — unsupported type or nothing found.";
+    return;
+  }
+
+  if (result.type === "track") {
+    mergeTracksIntoLibrary([result.track]);
+    currentView = [result.track];
+    searchInput.value = "";
+    applyFilterAndRender();
+    importStatusEl.textContent = "Now playing 1 track";
+    playTrack(result.track.id);
+    return;
+  }
+
+  if (result.type === "playlist") {
+    mergeTracksIntoLibrary(result.tracks);
+    currentView = result.tracks;
+    searchInput.value = "";
+    applyFilterAndRender();
+    importStatusEl.textContent = result.tracks.length
+      ? `Showing playlist (${result.tracks.length} track(s))`
+      : "Playlist contained no playable tracks.";
+    if (result.tracks.length) playTrack(result.tracks[0].id);
+  }
+}
+openFileBtn.addEventListener("click", openFileOrPlaylist);
 
 // Live progress while the main process is parsing tags
 window.api.onImportProgress(({ current, total }) => {
@@ -222,6 +289,7 @@ window.api.onImportProgress(({ current, total }) => {
 // ---------------------------------------------------------------------------
 (async function init() {
   library = await window.api.getLibrary();
+  currentView = library;
   applyFilterAndRender();
   if (library.length) {
     importStatusEl.textContent = `${library.length} track(s) in library`;
@@ -234,7 +302,6 @@ window.api.onImportProgress(({ current, total }) => {
 // ---------------------------------------------------------------------------
 // Transport controls
 // ---------------------------------------------------------------------------
-
 function updatePlayPauseIcon() {
   //Both icons are displayed but only one is visible
   if (audio.paused) {
