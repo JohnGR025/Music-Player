@@ -18,5 +18,16 @@ contextBridge.exposeInMainWorld("api", {
   // Progress updates while a folder is being scanned
   onImportProgress: (callback) => {
     ipcRenderer.on("library:importProgress", (_event, data) => callback(data));
+  },
+
+  // Mini player
+  openMiniPlayer: () => ipcRenderer.invoke("miniplayer:open"),
+
+  // Push the current playback state out to the mini window (if open)
+  sendPlayerState: (state) => ipcRenderer.send("player:state", state),
+
+  // Receive a control command that was pressed in the mini window
+  onPlayerCommand: (callback) => {
+    ipcRenderer.on("player:command", (_event, command) => callback(command));
   }
 });

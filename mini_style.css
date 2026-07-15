@@ -1,0 +1,124 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000;
+    font-family: 'Poppins', Arial, sans-serif;
+    -webkit-app-region: drag; /* lets the user drag the frameless window */
+}
+
+.MiniPlayer {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: bisque;
+    position: relative;
+}
+
+.mini-close-btn {
+    -webkit-app-region: no-drag;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.mini-close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.mini-title {
+    -webkit-app-region: no-drag;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 24px;
+    cursor: default;
+}
+
+.mini-seek-row {
+    -webkit-app-region: no-drag;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.mini-seek-row input[type="range"] {
+    flex: 1;
+    cursor: pointer;
+}
+.mini-seek-row span {
+    font-size: 0.75em;
+    color: #444;
+    flex-shrink: 0;
+    cursor: default;
+}
+
+.mini-controls {
+    -webkit-app-region: no-drag;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.mini-controls input[type="range"] {
+    width: 70px;
+    cursor: pointer;
+}
+
+.icon-btn,
+.play-pause-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 2px solid #333;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    color: #333;
+    position: relative;
+}
+.icon-btn:hover,
+.play-pause-btn:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+.icon-btn:active,
+.play-pause-btn:active {
+    transform: scale(0.95);
+}
+
+.play-pause-btn .play-icon,
+.play-pause-btn .pause-icon {
+    position: absolute;
+    transition: opacity 0.15s ease;
+    opacity: 1;
+}
+.play-pause-btn .play-icon.hidden,
+.play-pause-btn .pause-icon.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

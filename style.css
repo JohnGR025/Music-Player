@@ -265,6 +265,16 @@ html, body {
     position: relative;
 }
 
+.create-mini-window-btn {
+    border-radius: 50%;
+}
+
+.create-mini-window-btn svg {
+    width: 18px;
+    height: 18px;
+    transform: translateX(1.5px);
+}
+
 .icon-btn:hover,
 .play-pause-btn:hover {
     background-color: #f0f0f0;

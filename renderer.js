@@ -2,6 +2,7 @@
 const audio = document.getElementById("audio");
 const openFolderBtn = document.getElementById("openFolderBtn");
 const openFileBtn = document.getElementById("openFileBtn");
+const miniWindow = document.getElementById("createSmallWindow");
 const prevBtn = document.getElementById("prevBtn");
 const playPauseBtn = document.getElementById("playPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -83,7 +84,7 @@ function updateMusicPlayerBackgroundFromCover() {
 // Track list rendering
 // ---------------------------------------------------------------------------
 function renderTrackList(tracks) {
-  trackListEl.innerHTML = "";
+  trackListEl.innerHTML = ""; //Delete already existed elements
 
   if (currentView !== library && library.length) {
     const backRow = document.createElement("div");
@@ -226,6 +227,56 @@ function playTrack(trackId) {
 coverImg.addEventListener("load", updateMusicPlayerBackgroundFromCover);
 
 // ---------------------------------------------------------------------------
+// Mini player relay
+// ---------------------------------------------------------------------------
+// Pushes the current playback state to the main process, which forwards it
+// on to the mini window (if it's open). Cheap no-op if the mini window isn't
+// open — main.js just drops it.
+function broadcastState() {
+  window.api.sendPlayerState({
+    title: currentTrackId ? title.textContent : "No track loaded",
+    paused: audio.paused,
+    currentTime: audio.currentTime,
+    duration: audio.duration,
+    volume: audio.volume
+  });
+}
+
+miniWindow.addEventListener("click", () => window.api.openMiniPlayer());
+
+// Commands coming back from the mini window. These just call the exact same
+// functions the main window's own buttons use, so behavior stays identical.
+window.api.onPlayerCommand((command) => {
+  //read the command that is being send from mini window
+  switch (command.type) {
+    case "playPause":
+      if (audio.paused) audio.play(); else audio.pause();
+      break;
+    case "prev":
+      skipTrack(-1);
+      break;
+    case "next":
+      skipTrack(1);
+      break;
+    case "seek":
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        audio.currentTime = (command.value / 100) * audio.duration;
+      }
+      break;
+    case "volume":
+      audio.volume = command.value;
+      vol.value = String(command.value);
+      broadcastState();
+      break;
+  }
+});
+
+audio.addEventListener("play", broadcastState);
+audio.addEventListener("pause", broadcastState);
+audio.addEventListener("timeupdate", broadcastState);
+audio.addEventListener("loadedmetadata", broadcastState);
+
+// ---------------------------------------------------------------------------
 // Folder/File import
 // ---------------------------------------------------------------------------
 openFolderBtn.addEventListener("click", async () => {
@@ -343,6 +394,7 @@ audio.addEventListener("pause", updatePlayPauseIcon);
 
 vol.addEventListener("input", () => {
   audio.volume = parseFloat(vol.value);
+  broadcastState();
 });
 
 audio.addEventListener("timeupdate", () => {

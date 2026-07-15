@@ -6,8 +6,11 @@ const mm = require("music-metadata"); // npm install music-metadata
 const AUDIO_EXTENSIONS = [".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg"];
 const PLAYLIST_EXTENSIONS = [".m3u", ".m3u8"];
 
+let mainWindow = null;
+let miniWindow = null;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1000,
     height: 650,
     minWidth: 800,
@@ -20,7 +23,11 @@ function createWindow() {
     }
   });
 
-  win.loadFile("index.html");
+  mainWindow.loadFile("index.html");
+
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
 }
 
 app.whenReady().then(() => {
@@ -33,6 +40,71 @@ app.whenReady().then(() => {
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
+});
+
+// ---------------------------------------------------------------------------
+// Mini player window
+// ---------------------------------------------------------------------------
+// The mini player is a second, small BrowserWindow. It never touches the
+// <audio> element directly — that stays owned by mainWindow's renderer.
+// Instead this acts purely as a state/command relay:
+//   mainWindow renderer --(player:state)--> main process --> miniWindow
+//   miniWindow renderer --(player:command)--> main process --> mainWindow
+function createMiniWindow() {
+  miniWindow = new BrowserWindow({
+    width: 360,
+    height: 100,
+    maxHeight: 150,
+    maxWidth: 360,
+    minHeight: 100,
+    minWidth: 200,
+    // resizable: false,
+    // maximizable: false,
+    // minimizable: false,
+    fullscreenable: false,
+    alwaysOnTop: true,
+    frame: false,
+    backgroundColor: "#000000",
+    webPreferences: {
+      preload: path.join(__dirname, "mini_preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
+  });
+
+  miniWindow.loadFile("mini_window.html");
+
+  miniWindow.on("closed", () => {
+    miniWindow = null;
+    if (mainWindow && !mainWindow.isDestroyed()) mainWindow.show();
+  });
+}
+
+ipcMain.handle("miniplayer:open", () => {
+  if (miniWindow && !miniWindow.isDestroyed()) {
+    miniWindow.focus();
+    return;
+  }
+  createMiniWindow();
+  if (mainWindow && !mainWindow.isDestroyed()) mainWindow.hide();
+});
+
+ipcMain.on("miniplayer:close", () => {
+  if (miniWindow && !miniWindow.isDestroyed()) miniWindow.close();
+});
+
+// Relay: main window -> mini window (playback state changed)
+ipcMain.on("player:state", (event, state) => {
+  if (miniWindow && !miniWindow.isDestroyed()) {
+    miniWindow.webContents.send("player:state", state);
+  }
+});
+
+// Relay: mini window -> main window (user pressed a control in the mini player)
+ipcMain.on("player:command", (event, command) => {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send("player:command", command);
+  }
 });
 
 // ---------------------------------------------------------------------------
