@@ -52,12 +52,12 @@ app.on("window-all-closed", () => {
 //   miniWindow renderer --(player:command)--> main process --> mainWindow
 function createMiniWindow() {
   miniWindow = new BrowserWindow({
-    width: 360,
-    height: 100,
-    maxHeight: 150,
-    maxWidth: 360,
+    width: 160,
+    height: 150,
+    maxHeight: 160,
+    maxWidth: 200,
     minHeight: 100,
-    minWidth: 200,
+    minWidth: 100,
     // resizable: false,
     // maximizable: false,
     // minimizable: false,

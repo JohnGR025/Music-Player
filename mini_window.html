@@ -21,26 +21,28 @@
     </div>
 
     <div class="mini-controls">
-      <button id="miniPrevBtn" class="icon-btn" title="Previous" type="button" aria-label="Previous">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M11 7l-5 5 5 5"/>
-          <path d="M18 7l-5 5 5 5"/>
-        </svg>
-      </button>
-      <button id="miniPlayPauseBtn" class="play-pause-btn" title="Play/Pause" type="button">
-        <svg class="play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-        <svg class="pause-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-        </svg>
-      </button>
-      <button id="miniNextBtn" class="icon-btn" title="Next" type="button" aria-label="Next">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M13 7l5 5-5 5"/>
-          <path d="M6 7l5 5-5 5"/>
-        </svg>
-      </button>
+      <div id="controlBtns">
+        <button id="miniPrevBtn" class="icon-btn" title="Previous" type="button" aria-label="Previous">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 7l-5 5 5 5"/>
+            <path d="M18 7l-5 5 5 5"/>
+          </svg>
+        </button>
+        <button id="miniPlayPauseBtn" class="play-pause-btn" title="Play/Pause" type="button">
+          <svg class="play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg class="pause-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+          </svg>
+        </button>
+        <button id="miniNextBtn" class="icon-btn" title="Next" type="button" aria-label="Next">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 7l5 5-5 5"/>
+            <path d="M6 7l5 5-5 5"/>
+          </svg>
+        </button>
+      </div>
       <input id="miniVol" type="range" min="0" max="1" step="0.01" value="0.8" />
     </div>
   </div>

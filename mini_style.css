@@ -58,6 +58,7 @@ html, body {
 .mini-seek-row {
     -webkit-app-region: no-drag;
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
 }
@@ -75,6 +76,7 @@ html, body {
 .mini-controls {
     -webkit-app-region: no-drag;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -82,6 +84,11 @@ html, body {
 .mini-controls input[type="range"] {
     width: 70px;
     cursor: pointer;
+}
+#controlBtns {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .icon-btn,
