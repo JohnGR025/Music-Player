@@ -10,5 +10,8 @@ contextBridge.exposeInMainWorld("miniApi", {
   sendCommand: (command) => ipcRenderer.send("player:command", command),
 
   // Ask main process to close this window (and restore the main window)
-  close: () => ipcRenderer.send("miniplayer:close")
+  close: () => ipcRenderer.send("miniplayer:close"),
+
+  // Ask main process to change the mini window opacity
+  setOpacity: (value) => ipcRenderer.send("miniplayer:setOpacity", value)
 });

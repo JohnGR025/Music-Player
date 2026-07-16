@@ -4,7 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #000;
+    background-color: transparent;
     font-family: 'Poppins', Arial, sans-serif;
     -webkit-app-region: drag; /* lets the user drag the frameless window */
 }
@@ -17,7 +17,7 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: bisque;
+    background: bisque;
     position: relative;
 }
 
@@ -40,6 +40,33 @@ html, body {
 }
 .mini-close-btn:hover {
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.mini-opacity-btn {
+    -webkit-app-region: no-drag;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.7em;
+    line-height: 1;
+}
+.mini-opacity-btn:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.mini-opacity-btn.is-active {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: #111;
 }
 
 .mini-title {

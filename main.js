@@ -64,7 +64,8 @@ function createMiniWindow() {
     fullscreenable: false,
     alwaysOnTop: true,
     frame: false,
-    backgroundColor: "#000000",
+    transparent: true,
+    backgroundColor: "#00000000",
     webPreferences: {
       preload: path.join(__dirname, "mini_preload.js"),
       contextIsolation: true,
@@ -91,6 +92,13 @@ ipcMain.handle("miniplayer:open", () => {
 
 ipcMain.on("miniplayer:close", () => {
   if (miniWindow && !miniWindow.isDestroyed()) miniWindow.close();
+});
+
+ipcMain.on("miniplayer:setOpacity", (_event, value) => {
+  if (miniWindow && !miniWindow.isDestroyed()) {
+    const safeValue = Math.min(1, Math.max(0.1, Number(value) || 1));
+    miniWindow.setOpacity(safeValue);
+  }
 });
 
 // Relay: main window -> mini window (playback state changed)

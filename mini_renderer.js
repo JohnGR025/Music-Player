@@ -6,6 +6,7 @@ const miniPrevBtn = document.getElementById("miniPrevBtn");
 const miniPlayPauseBtn = document.getElementById("miniPlayPauseBtn");
 const miniNextBtn = document.getElementById("miniNextBtn");
 const closeMiniBtn = document.getElementById("closeMiniBtn");
+const opacityToggleBtn = document.getElementById("opacityToggleBtn");
 const playIcon = miniPlayPauseBtn.querySelector(".play-icon");
 const pauseIcon = miniPlayPauseBtn.querySelector(".pause-icon");
 
@@ -47,6 +48,7 @@ window.miniApi.onPlayerState((state) => {
   }
 });
 
+//Event listeners
 miniPrevBtn.addEventListener("click", () => window.miniApi.sendCommand({ type: "prev" }));
 miniNextBtn.addEventListener("click", () => window.miniApi.sendCommand({ type: "next" }));
 miniPlayPauseBtn.addEventListener("click", () => window.miniApi.sendCommand({ type: "playPause" }));
@@ -62,5 +64,16 @@ miniVol.addEventListener("input", () => {
   window.miniApi.sendCommand({ type: "volume", value: parseFloat(miniVol.value) });
 });
 miniVol.addEventListener("mouseup", () => { volBeingDragged = false; });
+
+//Change transparency of window
+let miniOpacityActive = false;
+
+opacityToggleBtn?.addEventListener("click", () => {
+  miniOpacityActive = !miniOpacityActive;
+  const nextOpacity = miniOpacityActive ? 0.6 : 1;
+  opacityToggleBtn.classList.toggle("is-active", miniOpacityActive);
+  opacityToggleBtn.setAttribute("aria-pressed", String(miniOpacityActive));
+  window.miniApi.setOpacity(nextOpacity);
+});
 
 closeMiniBtn.addEventListener("click", () => window.miniApi.close());
