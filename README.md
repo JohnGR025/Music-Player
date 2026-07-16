@@ -20,6 +20,7 @@ straight from local files — with ID3 tag and cover art support.
 - **Standard playback controls** — play/pause, previous/next, seek bar,
   volume, and a dynamic background color pulled from the current track's
   cover art.
+- **Mini window player** - Create a small window for putting in the corner of your deskpot.
 
 ## Supported formats
 
@@ -97,10 +98,13 @@ File option — won't re-parse metadata unless the file actually changed.
 ├── renderer.js     # UI logic: library/search state, playback, rendering
 ├── index.html       # App layout
 └── style.css        # App styling
+├── mini_renderer.js     # Mini window logic: mostly playback control
+├── mini_window.html       # Mini window layout
+└── mini_style.css        # Mini window styling
 ```
 
 ## Known limitations
 
-- Single window, no playlist creation/export from within the app.
+- Single window with mini player, no playlist creation/export from within the app.
 - No drag-and-drop import yet — folders and files are chosen via dialog.
 - Streaming URLs inside `.m3u` playlists aren't supported, only local files.
