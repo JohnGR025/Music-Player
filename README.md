@@ -108,3 +108,4 @@ File option — won't re-parse metadata unless the file actually changed.
 - Single window with mini player, no playlist creation/export from within the app.
 - No drag-and-drop import yet — folders and files are chosen via dialog.
 - Streaming URLs inside `.m3u` playlists aren't supported, only local files.
+- Imported playlists are not being saved independently for easy access.

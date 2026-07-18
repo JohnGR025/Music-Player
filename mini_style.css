@@ -7,6 +7,7 @@ html, body {
     background-color: transparent;
     font-family: 'Poppins', Arial, sans-serif;
     -webkit-app-region: drag; /* lets the user drag the frameless window */
+    border-radius: 10px;
 }
 
 .MiniPlayer {
@@ -19,6 +20,8 @@ html, body {
     gap: 8px;
     background: bisque;
     position: relative;
+    border-radius: 10px;
+    /* overflow: hidden; */
 }
 
 .mini-close-btn {

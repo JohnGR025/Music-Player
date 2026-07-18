@@ -57,7 +57,7 @@ function createMiniWindow() {
     maxHeight: 160,
     maxWidth: 200,
     minHeight: 100,
-    minWidth: 100,
+    minWidth: 125,
     // resizable: false,
     // maximizable: false,
     // minimizable: false,
@@ -65,6 +65,7 @@ function createMiniWindow() {
     alwaysOnTop: true,
     frame: false,
     transparent: true,
+    roundedCorners: true,
     backgroundColor: "#00000000",
     webPreferences: {
       preload: path.join(__dirname, "mini_preload.js"),
