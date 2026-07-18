@@ -20,7 +20,7 @@ const searchInput = document.getElementById("searchInput");
 const searchInputHoverText = "Search for a song from above...";
 let searchInputLibraryText = "";
 let searchInputPrevioustext = "";
-
+let importedPlaylistView = null;
 const DEFAULT_COVER = "display_cover.jpeg";
 
 // `library` = every track we know about (used for id lookups so playback
@@ -83,19 +83,38 @@ function updateMusicPlayerBackgroundFromCover() {
 // ---------------------------------------------------------------------------
 // Track list rendering
 // ---------------------------------------------------------------------------
+function navigateToLibraryView() {
+  currentView = library;
+  searchInput.value = "";
+  searchInput.placeholder = searchInputLibraryText;
+  applyFilterAndRender();
+}
+
+function navigateToImportedPlaylistView() {
+  if (!importedPlaylistView) return;
+
+  currentView = importedPlaylistView;
+  searchInput.value = "";
+  searchInput.placeholder = importedPlaylistView.length
+    ? `Showing playlist (${importedPlaylistView.length} track(s))`
+    : "Playlist contained no playable tracks.";
+  applyFilterAndRender();
+}
+
 function renderTrackList(tracks) {
   trackListEl.innerHTML = ""; //Delete already existed elements
 
   if (currentView !== library && library.length) {
     const backRow = document.createElement("div");
     backRow.className = "viewBackRow";
-    backRow.textContent = `\u25C0 Back to full library (${library.length} track${library.length === 1 ? "" : "s"})`;
-    backRow.addEventListener("click", () => {
-      currentView = library;
-      searchInput.value = "";
-      searchInput.placeholder = searchInputLibraryText;
-      applyFilterAndRender();
-    });
+    backRow.textContent = `◀ Back to full library (${library.length} track${library.length === 1 ? "" : "s"})`;
+    backRow.addEventListener("click", navigateToLibraryView);
+    trackListEl.appendChild(backRow);
+  } else if (currentView === library && importedPlaylistView) {
+    const backRow = document.createElement("div");
+    backRow.className = "viewBackRow";
+    backRow.textContent = `◀ Back to imported playlist (${importedPlaylistView.length} track${importedPlaylistView.length === 1 ? "" : "s"})`;
+    backRow.addEventListener("click", navigateToImportedPlaylistView);
     trackListEl.appendChild(backRow);
   }
 
@@ -283,6 +302,7 @@ openFolderBtn.addEventListener("click", async () => {
   const folderPath = await window.api.openFolder();
   if (!folderPath) return; // user cancelled
 
+  importedPlaylistView = null;
   searchInput.placeholder = "Scanning folder...";
 
   const tracks = await window.api.importFolder(folderPath);
@@ -321,6 +341,7 @@ async function openFileOrPlaylist() {
   }
 
   if (result.type === "track") {
+    importedPlaylistView = null;
     mergeTracksIntoLibrary([result.track]);
     currentView = [result.track];
     searchInput.value = "";
@@ -331,6 +352,7 @@ async function openFileOrPlaylist() {
   }
 
   if (result.type === "playlist") {
+    importedPlaylistView = result.tracks;
     mergeTracksIntoLibrary(result.tracks);
     currentView = result.tracks;
     searchInput.value = "";
