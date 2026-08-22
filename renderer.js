@@ -3,6 +3,7 @@ const audio = document.getElementById("audio");
 const openFolderBtn = document.getElementById("openFolderBtn");
 const openFileBtn = document.getElementById("openFileBtn");
 const miniWindow = document.getElementById("createSmallWindow");
+const loopSong = document.getElementById("loopSong");
 const prevBtn = document.getElementById("prevBtn");
 const playPauseBtn = document.getElementById("playPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -22,6 +23,7 @@ let searchInputLibraryText = "";
 let searchInputPrevioustext = "";
 let importedPlaylistView = null;
 const DEFAULT_COVER = "display_cover.jpeg";
+let loop = false;
 
 // `library` = every track we know about (used for id lookups so playback
 // always works). `currentView` = what's actually shown in #trackList right
@@ -400,6 +402,15 @@ function updatePlayPauseIcon() {
   }
 }
 
+loopSong.addEventListener("click", () => {
+  if (loop) {
+    loopSong.style.borderColor = "red";
+  } else {
+    loopSong.style.borderColor = "green";
+  }
+  loop = !loop;
+})
+
 prevBtn.addEventListener("click", () => skipTrack(-1));
 nextBtn.addEventListener("click", () => skipTrack(1));
 
@@ -413,6 +424,15 @@ playPauseBtn.addEventListener("click", () => {
 
 audio.addEventListener("play", updatePlayPauseIcon);
 audio.addEventListener("pause", updatePlayPauseIcon);
+audio.addEventListener("ended", () => {
+  if (loop) {
+    audio.currentTime = 0;
+    audio.play();
+    return;
+  }
+
+  skipTrack(1);
+});
 
 vol.addEventListener("input", () => {
   audio.volume = parseFloat(vol.value);

@@ -223,6 +223,14 @@ html, body {
     color: #888;
 }
 
+#border_color_green {
+    border-color: green;
+}
+
+#loopSong {
+    border-color: red;
+}
+
 .controls {
     display: flex;
     align-items: center;
