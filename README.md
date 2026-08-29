@@ -109,3 +109,8 @@ File option — won't re-parse metadata unless the file actually changed.
 - No drag-and-drop import yet — folders and files are chosen via dialog.
 - Streaming URLs inside `.m3u` playlists aren't supported, only local files.
 - Imported playlists are not being saved independently for easy access.
+
+## Possible (untested) issues
+
+- file URL construction: On Linux, the link contains 4 slashes which should still work but never know, needs testing.
+- Mini window: The attributes set for the window creation may get interrupted by window managers, needs testing.
