@@ -16,6 +16,7 @@ function createWindow() {
     minWidth: 800,
     minHeight: 500,
     backgroundColor: "#000000",
+    icon: path.join(__dirname, "build/icons/png/512x512.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -67,6 +68,7 @@ function createMiniWindow() {
     transparent: true,
     roundedCorners: true,
     backgroundColor: "#00000000",
+    icon: path.join(__dirname, "build/icons/png/512x512.png"),
     webPreferences: {
       preload: path.join(__dirname, "mini_preload.js"),
       contextIsolation: true,
