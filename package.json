@@ -6,12 +6,31 @@
   "scripts": {
     "start": "electron ."
   },
+  "build": {
+    "appId": "com.johngr025.musicplayer",
+    "productName": "MusicPlayer",
+    "files": [
+      "**/*",
+      "!node_modules/electron-builder"
+    ],
+    "win": {
+      "icon": "build/icons/icon.ico"
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns"
+    },
+    "linux": {
+      "icon": "build/icons/png",
+      "target": "AppImage"
+    }
+  },
   "keywords": [],
   "author": "JohnGR025",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^40.0.0"
+    "electron": "^40.0.0",
+    "electron-builder": "^26.15.3"
   },
   "dependencies": {
     "music-metadata": "^11.13.0"

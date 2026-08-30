@@ -114,3 +114,4 @@ File option — won't re-parse metadata unless the file actually changed.
 
 - file URL construction: On Linux, the link contains 4 slashes which should still work but never know, needs testing.
 - Mini window: The attributes set for the window creation may get interrupted by window managers, needs testing.
+- App icon not showing correctly on MacOS (speculation).
