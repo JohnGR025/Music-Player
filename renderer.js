@@ -23,7 +23,7 @@ let searchInputLibraryText = "";
 let searchInputPrevioustext = "";
 let importedPlaylistView = null;
 const DEFAULT_COVER = "display_cover.jpeg";
-let loop = false;
+let isLooping = false;
 
 // `library` = every track we know about (used for id lookups so playback
 // always works). `currentView` = what's actually shown in #trackList right
@@ -404,12 +404,15 @@ function updatePlayPauseIcon() {
 }
 
 loopSong.addEventListener("click", () => {
-  if (loop) {
+  const loopIcon = loopSong.querySelector(".icon-mask");
+  if (isLooping) {
     loopSong.style.borderColor = "red";
+    loopIcon.style.setProperty('--icon-url', "url('build/icons/ui/no-loop.svg')");
   } else {
     loopSong.style.borderColor = "green";
+    loopIcon.style.setProperty('--icon-url', "url('build/icons/ui/song-loop.svg')");
   }
-  loop = !loop;
+  isLooping = !isLooping;
 })
 
 prevBtn.addEventListener("click", () => skipTrack(-1));
@@ -426,7 +429,7 @@ playPauseBtn.addEventListener("click", () => {
 audio.addEventListener("play", updatePlayPauseIcon);
 audio.addEventListener("pause", updatePlayPauseIcon);
 audio.addEventListener("ended", () => {
-  if (loop) {
+  if (isLooping) {
     audio.currentTime = 0;
     audio.play();
     return;

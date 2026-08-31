@@ -1,6 +1,6 @@
 {
   "name": "MusicPlayer",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "Local Music player",
   "main": "main.js",
   "scripts": {
