@@ -123,6 +123,7 @@ function renderTrackList(tracks) {
   if (!tracks.length) {
     const empty = document.createElement("div");
     empty.className = "trackEmpty";
+    empty.style.cursor = "default";
     empty.textContent = currentView.length === 0
       ? "No tracks imported yet. Click \"Open Folder\" to import a music folder, or \"Open File\" to add a single track or playlist."
       : "No songs match your search.";
