@@ -21,28 +21,16 @@
         <!--Other Options Panel-->
         <div class="options">
           <button id="openFolderBtn" class="icon-btn open-folder-btn" title="Open Folder" type="button" aria-label="Open Folder">
-            <svg class="folder-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
-              <path d="M3 10h18"/>
-            </svg>
+            <span class="icon-mask folder-icon" style="--icon-url: url('build/icons/ui/folder.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
           </button>
           <button id="openFileBtn" class="icon-btn open-file-btn" title="Open File" type="button" aria-label="Open File">
-            <svg class="file-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M6 3h8l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
-              <path d="M14 3v5h5"/>
-            </svg>
+            <span class="icon-mask file-icon" style="--icon-url: url('build/icons/ui/file.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
           </button>
           <button id="createSmallWindow" class="icon-btn create-mini-window-btn" title="Mini player" type="button" aria-label="Mini player">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
-              <rect x="3" y="4" width="10" height="8" rx="1.2"></rect>
-              <rect x="9" y="10" width="10" height="8" rx="1.2"></rect>
-              <path d="M9 10V8"></path>
-            </svg>
+            <span class="icon-mask" style="--icon-url: url('build/icons/ui/mini-window.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
           </button>
           <button id="loopSong" class="icon-btn loop-song-btn" title="Loop song" type="button" aria-label="Loop song">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-              <path d="M13 4h7v2h-5v9.25a3.25 3.25 0 1 1-2-3.04V4Z"></path>
-            </svg>
+            <span class="icon-mask" style="--icon-url: url('build/icons/ui/song-loop.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 16px; height: 16px;"></span>
           </button>
           <span id="importStatus"></span>
         </div>
@@ -56,10 +44,7 @@
         <!--Search bar-->
         <div class="search_bar">
           <div id="search_input">
-            <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="7"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+            <span class="icon-mask search-icon" style="--icon-url: url('build/icons/ui/search.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 18px; height: 18px;"></span>
             <input id="searchInput" type="text" placeholder="search for a song from above...">
           </div>
         </div>
@@ -67,24 +52,14 @@
         <!--Control Panel-->
         <div class="controls">
           <button id="prevBtn" class="icon-btn" title="Previous Song" type="button" aria-label="Previous Song">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M11 7l-5 5 5 5"/>
-              <path d="M18 7l-5 5 5 5"/>
-            </svg>
+            <span class="icon-mask" style="--icon-url: url('build/icons/ui/previous.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
           </button>
           <button id="playPauseBtn" class="play-pause-btn" title="Play/Pause">
-            <svg class="play-icon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg class="pause-icon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-            </svg>
+            <span class="icon-mask play-icon" style="--icon-url: url('build/icons/ui/play.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
+            <span class="icon-mask pause-icon" style="--icon-url: url('build/icons/ui/pause.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
           </button>
           <button id="nextBtn" class="icon-btn" title="Next Song" type="button" aria-label="Next Song">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M13 7l5 5-5 5"/>
-              <path d="M6 7l5 5-5 5"/>
-            </svg>
+            <span class="icon-mask" style="--icon-url: url('build/icons/ui/next.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
           </button>
           <input id="seek" type="range" min="0" max="100" value="0" />
           <span id="time">0:00 / 0:00</span>

@@ -255,6 +255,17 @@ html, body {
     cursor: pointer;
 }
 
+.icon-mask {
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
 .icon-btn,
 .play-pause-btn {
     width: 30px;
@@ -277,7 +288,7 @@ html, body {
     border-radius: 50%;
 }
 
-.create-mini-window-btn svg {
+.create-mini-window-btn .icon-mask {
     width: 18px;
     height: 18px;
     transform: translateX(1.5px);
@@ -295,8 +306,8 @@ html, body {
     transform: scale(0.95);
 }
 
-.icon-btn svg,
-.play-pause-btn svg {
+.icon-btn .icon-mask,
+.play-pause-btn .icon-mask {
     width: 24px;
     height: 24px;
 }
