@@ -24,7 +24,7 @@ function createWindow() {
     }
   });
 
-  mainWindow.loadFile("index.html");
+  mainWindow.loadFile(path.join(__dirname, "index.html"));
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -68,7 +68,7 @@ function createMiniWindow() {
     transparent: true,
     roundedCorners: true,
     backgroundColor: "#00000000",
-    icon: path.join(__dirname, "build/icons/png/512x512.png"),
+    icon: path.join(__dirname, "assets/icons/png/512x512.png"),
     webPreferences: {
       preload: path.join(__dirname, "mini_preload.js"),
       contextIsolation: true,
@@ -76,7 +76,7 @@ function createMiniWindow() {
     }
   });
 
-  miniWindow.loadFile("mini_window.html");
+  miniWindow.loadFile(path.join(__dirname, "mini_window.html"));
 
   miniWindow.on("closed", () => {
     miniWindow = null;

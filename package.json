@@ -4,17 +4,34 @@
   "description": "Local Music player",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+  "start": "electron .",
+  "dist": "electron-builder --win",
+  "dist:win": "electron-builder --win nsis"
   },
   "build": {
     "appId": "com.johngr025.musicplayer",
     "productName": "MusicPlayer",
     "files": [
       "**/*",
-      "!node_modules/electron-builder"
+      "!node_modules/electron-builder/**",
+      "!dist/**",
+      "!.git/**",
+      "!*.md"
     ],
     "win": {
-      "icon": "build/icons/icon.ico"
+    "icon": "build/icons/icon.ico",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     },
     "mac": {
       "icon": "build/icons/icon.icns"

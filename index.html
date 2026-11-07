@@ -12,7 +12,7 @@
       <!--Display of the song cover-->
       <div class="Cover_display">
         <div id="cover">
-          <img id="coverImg" src="display_cover.jpeg" alt="Song image cover here">
+          <img id="coverImg" src="assets/display_cover.jpeg" alt="Song image cover here">
         </div>
       </div>
 
@@ -21,16 +21,16 @@
         <!--Other Options Panel-->
         <div class="options">
           <button id="openFolderBtn" class="icon-btn open-folder-btn" title="Open Folder" type="button" aria-label="Open Folder">
-            <span class="icon-mask folder-icon" style="--icon-url: url('build/icons/ui/folder.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
+            <span class="icon-mask folder-icon" style="--icon-url: url('assets/icons/ui/folder.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
           </button>
           <button id="openFileBtn" class="icon-btn open-file-btn" title="Open File" type="button" aria-label="Open File">
-            <span class="icon-mask file-icon" style="--icon-url: url('build/icons/ui/file.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
+            <span class="icon-mask file-icon" style="--icon-url: url('assets/icons/ui/file.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
           </button>
           <button id="createSmallWindow" class="icon-btn create-mini-window-btn" title="Mini player" type="button" aria-label="Mini player">
-            <span class="icon-mask" style="--icon-url: url('build/icons/ui/mini-window.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
+            <span class="icon-mask" style="--icon-url: url('assets/icons/ui/mini-window.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
           </button>
           <button id="loopSong" class="icon-btn loop-song-btn" title="Loop song" type="button" aria-label="Loop song">
-            <span class="icon-mask" style="--icon-url: url('build/icons/ui/no-loop.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 16px; height: 16px;"></span>
+            <span class="icon-mask" style="--icon-url: url('assets/icons/ui/no-loop.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 16px; height: 16px;"></span>
           </button>
           <span id="importStatus"></span>
         </div>
@@ -44,7 +44,7 @@
         <!--Search bar-->
         <div class="search_bar">
           <div id="search_input">
-            <span class="icon-mask search-icon" style="--icon-url: url('build/icons/ui/search.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 18px; height: 18px;"></span>
+            <span class="icon-mask search-icon" style="--icon-url: url('assets/icons/ui/search.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 18px; height: 18px;"></span>
             <input id="searchInput" type="text" placeholder="search for a song from above...">
           </div>
         </div>
@@ -52,14 +52,14 @@
         <!--Control Panel-->
         <div class="controls">
           <button id="prevBtn" class="icon-btn" title="Previous Song" type="button" aria-label="Previous Song">
-            <span class="icon-mask" style="--icon-url: url('build/icons/ui/previous.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
+            <span class="icon-mask" style="--icon-url: url('assets/icons/ui/previous.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
           </button>
           <button id="playPauseBtn" class="play-pause-btn" title="Play/Pause">
-            <span class="icon-mask play-icon" style="--icon-url: url('build/icons/ui/play.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
-            <span class="icon-mask pause-icon" style="--icon-url: url('build/icons/ui/pause.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
+            <span class="icon-mask play-icon" style="--icon-url: url('assets/icons/ui/play.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
+            <span class="icon-mask pause-icon" style="--icon-url: url('assets/icons/ui/pause.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url);"></span>
           </button>
           <button id="nextBtn" class="icon-btn" title="Next Song" type="button" aria-label="Next Song">
-            <span class="icon-mask" style="--icon-url: url('build/icons/ui/next.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
+            <span class="icon-mask" style="--icon-url: url('assets/icons/ui/next.svg'); -webkit-mask-image: var(--icon-url); mask-image: var(--icon-url); width: 20px; height: 20px;"></span>
           </button>
           <input id="seek" type="range" min="0" max="100" value="0" />
           <span id="time">0:00 / 0:00</span>
